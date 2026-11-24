@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lost&Found</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F6FA;--bg2:#E9ECF4;--surf:#fff;--glass:rgba(255,255,255,.68);--tx:#171B24;--mu:#858C99;--bd:rgba(255,255,255,.85);--ln:rgba(35,45,65,.1);--shc:rgba(35,45,65,.08);--sh:0 8px 28px var(--shc);--pri:#20242D;--pt:#fff;--inp:rgba(255,255,255,.75);
+--lost-b:#E8F1FF;--lost-t:#2769C8;--found-b:#E7F7EF;--found-t:#238557;--rev-b:#FFF4DB;--rev-t:#A87516;--ret-b:#EEF0F3;--ret-t:#687080;--dng:#E45B5B;color-scheme:light}
+:root[data-theme=dark]{--bg:#0E1116;--bg2:#1A1F2A;--surf:#1B2029;--glass:rgba(40,46,58,.62);--tx:#F2F4F8;--mu:#99A1B0;--bd:rgba(255,255,255,.12);--ln:rgba(255,255,255,.1);--shc:rgba(0,0,0,.4);--sh:0 8px 28px var(--shc);--pri:#F2F4F8;--pt:#14171D;--inp:rgba(255,255,255,.07);
+--lost-b:#1B2E4D;--lost-t:#8DB8FF;--found-b:#173A2B;--found-t:#7FDDAE;--rev-b:#41331A;--rev-t:#F0C373;--ret-b:#2A2F3A;--ret-t:#AAB1BE;color-scheme:dark}
+html{transition:--bg .55s ease,--bg2 .55s ease,--surf .55s ease,--glass .55s ease,--tx .55s ease,--mu .55s ease,--bd .55s ease,--ln .55s ease,--shc .55s ease,--pri .55s ease,--pt .55s ease,--inp .55s ease,--lost-b .55s ease,--lost-t .55s ease,--found-b .55s ease,--found-t .55s ease,--rev-b .55s ease,--rev-t .55s ease,--ret-b .55s ease,--ret-t .55s ease}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:'Noto Sans Thai',-apple-system,'SF Pro Text','Segoe UI',sans-serif;background:var(--bg2);color:var(--tx);font-size:15px;line-height:1.5;display:flex;align-items:center;justify-content:center}
+button,input,select,textarea{font:inherit;color:inherit}
+button{border:0;background:none;cursor:pointer}
+svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.phone{position:relative;width:100%;height:100%;overflow:hidden;background:var(--bg);isolation:isolate}
+@supports(height:100dvh){.phone{height:100dvh}}
+@media(min-width:500px){.phone{width:390px;height:844px;max-height:96vh;border-radius:48px;box-shadow:0 30px 80px rgba(35,45,65,.22),0 0 0 8px var(--surf)}}
+.phone:before,.phone:after{content:"";position:absolute;z-index:-1;border-radius:50%;filter:blur(2px);pointer-events:none}
+.phone:before{width:420px;height:420px;right:-180px;top:-120px;background:radial-gradient(circle,var(--surf),transparent 70%)}
+.phone:after{width:380px;height:380px;left:-200px;bottom:60px;background:radial-gradient(circle,var(--bg2),transparent 70%)}
+.scr{position:absolute;inset:0;display:flex;flex-direction:column;animation:in .35s ease}
+@keyframes in{from{opacity:0}}
+.scr.in-r{animation:inr .42s cubic-bezier(.2,.8,.2,1)}.scr.in-l{animation:inl .42s cubic-bezier(.2,.8,.2,1)}
+.scr.out-l{animation:outl .3s ease forwards}.scr.out-r{animation:outr .3s ease forwards}
+@keyframes inr{from{opacity:0;transform:translateX(44px)}}@keyframes inl{from{opacity:0;transform:translateX(-44px)}}
+@keyframes outl{to{opacity:0;transform:translateX(-44px)}}@keyframes outr{to{opacity:0;transform:translateX(44px)}}
+.lang-out{opacity:0;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease}
+.scr.lang-in,.lang-in{animation:lin .4s ease}@keyframes lin{from{opacity:0;transform:translateY(-6px)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.scr.out-l,.scr.out-r{display:none}}
+.body{flex:1;overflow-y:auto;padding:calc(env(safe-area-inset-top,0px) + 14px) 24px 24px;scrollbar-width:none}
+.body.nav{padding-bottom:120px}.body::-webkit-scrollbar{display:none}
+.glass{background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);border:1px solid var(--bd);box-shadow:var(--sh);border-radius:24px}
+h1{font-size:26px;font-weight:700;line-height:1.3}h2{font-size:20px;font-weight:600}h3{font-size:17px;font-weight:600}
+.mu{color:var(--mu)}.cap{font-size:13px;color:var(--mu)}.c{text-align:center}
+.top{display:flex;align-items:center;justify-content:space-between;min-height:48px;margin-bottom:12px}
+.top h3{position:absolute;left:0;right:0;text-align:center;pointer-events:none}
+.ib{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;position:relative;z-index:1}
+.btn{height:54px;border-radius:18px;background:var(--pri);color:var(--pt);font-weight:600;font-size:16px;width:100%;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 8px 20px rgba(20,25,40,.2);transition:transform .15s,opacity .2s}
+.btn:active{transform:scale(.97)}.btn:disabled{opacity:.4}
+.btn.sec{background:var(--glass);color:var(--tx);border:1px solid var(--ln);box-shadow:none}
+.btn.out{background:transparent;color:var(--dng);border:1px solid var(--ln);box-shadow:none}
+.fld{margin-bottom:14px}.fld label{display:block;font-size:13px;font-weight:500;margin:0 0 6px 4px}
+.fld .w{display:flex;align-items:center;gap:10px;background:var(--inp);border:1px solid var(--ln);border-radius:16px;padding:0 14px;min-height:50px;color:var(--mu);transition:border-color .2s,box-shadow .2s}
+.fld .w:focus-within{border-color:#3478F6;box-shadow:0 0 0 3px rgba(52,120,246,.18)}
+.fld.err .w{border-color:var(--dng)}.fld .em{color:var(--dng);font-size:12px;margin:4px 0 0 4px;display:none}.fld.err .em{display:block}
+.fld input,.fld select,.fld textarea{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--tx);padding:12px 0;font-size:15px}
+.fld textarea{resize:none;min-height:76px}.fld select option{color:#000}
+.badge{display:inline-block;padding:3px 12px;border-radius:99px;font-size:12px;font-weight:600;white-space:nowrap}
+.b-lost{background:var(--lost-b);color:var(--lost-t)}.b-found{background:var(--found-b);color:var(--found-t)}.b-review{background:var(--rev-b);color:var(--rev-t)}.b-returned{background:var(--ret-b);color:var(--ret-t)}
+.row{display:flex;align-items:center;gap:14px}.g{flex:1;min-width:0}
+.item{display:flex;align-items:center;gap:14px;padding:12px;margin-bottom:12px;width:100%;text-align:left}
+.thumb{width:62px;height:62px;border-radius:16px;background:linear-gradient(145deg,var(--surf),var(--bg2));display:grid;place-items:center;flex:none;border:1px solid var(--bd);box-shadow:inset 0 1px 6px rgba(255,255,255,.5)}
+.thumb{overflow:hidden}.thumb svg{width:30px;height:30px}.thumb.lg{width:100%;height:230px;border-radius:28px}.thumb.lg svg{width:96px;height:96px;stroke-width:1.2}
+.nm{font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav{}
+.bar{position:absolute;left:20px;right:20px;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);display:flex;padding:8px;border-radius:32px;z-index:5;transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .3s ease}
+.bar.hide{transform:translateY(140%);opacity:0;pointer-events:none}
+.bar .pill{position:absolute;top:8px;bottom:8px;left:8px;width:calc((100% - 16px)/3);border-radius:24px;background:var(--ln);transform:translateX(calc(var(--i,0)*100%));transition:transform .5s cubic-bezier(.3,1.25,.45,1)}
+.bar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0 8px;color:var(--mu);font-size:12px;position:relative;min-height:56px;transition:color .3s}
+.bar button svg{transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+.bar button.on{color:var(--tx);font-weight:600}.bar button.on svg{transform:translateY(-1px) scale(1.12)}
+.bar button:after{content:"";position:absolute;bottom:1px;width:36px;height:3px;border-radius:3px;background:var(--tx);opacity:0;transition:opacity .3s}.bar button.on:after{opacity:1}
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:10px 0 26px}
+.logo{width:150px;height:150px;border-radius:40px;display:grid;place-items:center;transform:rotate(-8deg);margin:10px 0 26px;position:relative}
+.logo.s{width:96px;height:96px;border-radius:28px;margin:6px 0 16px}
+.logo svg{width:74%;height:74%;transform:rotate(8deg)}
+.logo:before{content:"";position:absolute;inset:-14px -34px;border:1px solid var(--ln);border-radius:50%;transform:rotate(14deg)}
+.logo.s:before{display:none}
+.hero h1{font-size:32px}
+.sc{display:flex;align-items:center;gap:16px;padding:18px 20px;margin-bottom:12px;width:100%;text-align:left;border-radius:28px}
+.sc .ic{padding-right:16px;border-right:1px solid var(--ln)}.sc .ic svg{width:30px;height:30px}
+.sec-h{display:flex;justify-content:space-between;align-items:center;margin:26px 0 12px}
+.seg{display:flex;background:var(--inp);border:1px solid var(--ln);border-radius:16px;padding:4px;gap:4px}
+.seg button{flex:1;height:42px;border-radius:12px;font-weight:500;color:var(--mu);display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.seg button.on{background:var(--pri);color:var(--pt)}
+.chips{display:flex;gap:8px;margin:12px 0 16px;overflow-x:auto;scrollbar-width:none}
+.chip{padding:8px 18px;border-radius:99px;background:var(--inp);border:1px solid var(--ln);white-space:nowrap;min-height:40px}
+.chip.on{background:var(--pri);color:var(--pt);border-color:transparent}
+.upl{display:flex;flex-direction:column;align-items:center;gap:4px;padding:20px;text-align:center;cursor:pointer;margin-bottom:16px;overflow:hidden}
+.upl img{width:100%;max-height:180px;object-fit:cover;border-radius:16px}
+.list{overflow:hidden;margin-bottom:16px}
+.list button,.list .li{display:flex;align-items:center;gap:14px;width:100%;padding:14px 18px;text-align:left;min-height:54px}
+.list>*+*{border-top:1px solid var(--ln)}
+.cnt{margin-left:auto;background:var(--dng);color:#fff;border-radius:99px;font-size:12px;min-width:22px;height:22px;display:grid;place-items:center;font-weight:600}
+.sw{width:50px;height:30px;border-radius:30px;background:var(--ln);position:relative;margin-left:auto;transition:.2s;flex:none}
+.sw:after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.25);transition:.2s}
+.sw.on{background:#2EAA72}.sw.on:after{left:23px}
+.av{width:96px;height:96px;border-radius:50%;background:linear-gradient(145deg,var(--surf),var(--bg2));display:grid;place-items:center;margin:8px auto 14px;border:1px solid var(--bd);box-shadow:var(--sh)}.av svg{width:48px;height:48px;color:var(--mu)}
+.msgs{flex:1;overflow-y:auto;padding:8px 20px;display:flex;flex-direction:column;gap:10px}
+.m{max-width:78%;padding:10px 14px;border-radius:20px;font-size:15px}.m small{display:block;font-size:11px;opacity:.6;margin-top:2px}
+.m.me{align-self:flex-end;background:var(--lost-b);color:var(--lost-t);border-bottom-right-radius:6px}.m.th{align-self:flex-start;background:var(--ret-b);border-bottom-left-radius:6px}
+.cb{display:flex;gap:10px;align-items:center;padding:12px 20px calc(env(safe-area-inset-bottom,0px) + 16px)}
+.cb input{flex:1;height:46px;border-radius:23px;border:1px solid var(--ln);background:var(--inp);padding:0 18px;outline:0;color:var(--tx)}
+.cb .snd{width:46px;height:46px;border-radius:50%;background:var(--pri);color:var(--pt);display:grid;place-items:center}
+.nt{display:flex;gap:14px;padding:14px;margin-bottom:12px;align-items:flex-start}
+.nt .d{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;flex:none}
+.empty{text-align:center;padding:50px 20px;color:var(--mu)}.empty svg{width:56px;height:56px;margin-bottom:10px;opacity:.6}
+.sheet{position:absolute;inset:0;z-index:20;background:rgba(10,14,22,.35);display:flex;align-items:flex-end;animation:in .2s}
+.sheet>div{width:100%;padding:26px 24px calc(env(safe-area-inset-bottom,0px) + 24px);border-radius:32px 32px 0 0;background:var(--surf);animation:up .3s ease}
+@keyframes up{from{transform:translateY(40px)}}
+.toast{position:absolute;left:50%;top:calc(env(safe-area-inset-top,0px) + 16px);transform:translateX(-50%);z-index:30;padding:12px 20px;border-radius:99px;font-weight:500;white-space:nowrap;animation:in .25s}
+.spin{width:26px;height:26px;border:3px solid var(--ln);border-top-color:var(--tx);border-radius:50%;animation:sp 1s linear infinite;margin:0 auto 8px}@keyframes sp{to{transform:rotate(360deg)}}
+a.l{color:#3478F6;font-weight:500;cursor:pointer;text-decoration:none}
+.info{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}.info svg{margin-top:2px;color:var(--mu)}
+:focus-visible{outline:2px solid #3478F6;outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="phone" id="app" role="application"></div>
+<script>
+try{[['bg','#F5F6FA'],['bg2','#E9ECF4'],['surf','#fff'],['glass','rgba(255,255,255,.68)'],['tx','#171B24'],['mu','#858C99'],['bd','rgba(255,255,255,.85)'],['ln','rgba(35,45,65,.1)'],['shc','rgba(35,45,65,.08)'],['pri','#20242D'],['pt','#fff'],['inp','rgba(255,255,255,.75)'],['lost-b','#E8F1FF'],['lost-t','#2769C8'],['found-b','#E7F7EF'],['found-t','#238557'],['rev-b','#FFF4DB'],['rev-t','#A87516'],['ret-b','#EEF0F3'],['ret-t','#687080']].forEach(([n,v])=>CSS.registerProperty({name:'--'+n,syntax:'<color>',inherits:true,initialValue:v}))}catch(e){}
+const P={home:"M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z",list:"M8 3h8a2 2 0 0 1 2 2v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V5a2 2 0 0 1 2-2zM9 10h6M9 14h6M9 18h4",user:"M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 3.6-6 8-6s8 2 8 6",gear:"M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2-1.2L14.2 3h-4l-.4 2.7a7 7 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5a7 7 0 0 0 0 2.4l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2 1.2l.4 2.7h4l.4-2.7a7 7 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z",back:"M15 5l-7 7 7 7",chev:"M9 5l7 7-7 7",plus:"M12 5v14M5 12h14",search:"M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-4.5-4.5",mega:"M3 11v3a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1zM15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12",box:"M12 3l8 4.5v9L12 21l-8-4.5v-9zM4 7.5l8 4.5 8-4.5M12 12v9",camera:"M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z",bell:"M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 21h4",check:"M5 12.5l4.5 4.5L19 7.5",info:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 11v5M12 8v.1",send:"M4 12l16-8-6 16-3-7z",pin:"M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11zM12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z",cal:"M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM4 10h16M8 3v4M16 3v4",chat:"M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-8l-5 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z",out:"M9 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4M16 8l4 4-4 4M20 12H9",globe:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18",moon:"M20 14A8 8 0 0 1 10 4a8 8 0 1 0 10 10z",lock:"M6 11h12v9H6zM8 11V8a4 4 0 0 1 8 0v3",eye:"M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",tag:"M3 12V4h8l10 10-8 8zM7.5 8v.1",
+phones:"M4 15v-3a8 8 0 0 1 16 0v3M4 15a2 2 0 0 0 2 2h1v-5H6a2 2 0 0 0-2 2zM20 15a2 2 0 0 1-2 2h-1v-5h1a2 2 0 0 1 2 2z",bag:"M6 8h12l1 13H5zM9 8V6a3 3 0 0 1 6 0v2",bottle:"M10 3h4v3l1.5 2.5V20a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V8.5L10 6zM8.5 12h7",umb:"M3 12a9 9 0 0 1 18 0zM12 12v7a2 2 0 0 0 4 0",card:"M3 6h18a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zM2 10h20M6 15h4"};
+const ic=(n,c='')=>`<svg class="i ${c}" viewBox="0 0 24 24" aria-hidden="true"><path d="${P[n]}"/></svg>`;
+const T={th:{app:'Lost&Found',tag:'แจ้งของหาย ในโรงเรียนของเรา',loading:'กำลังโหลด...',login:'เข้าสู่ระบบ',loginSub:'เข้าสู่ระบบเพื่อใช้งาน',id:'เบอร์โทรศัพท์ / อีเมล',pw:'รหัสผ่าน',pw2:'ยืนยันรหัสผ่าน',forgot:'ลืมรหัสผ่าน?',noacc:'ยังไม่มีบัญชี?',reg:'สมัครสมาชิก',regSub:'สร้างบัญชีเพื่อแจ้งของหายได้เลย',fname:'ชื่อ-นามสกุล',sid:'รหัสนักเรียน',cls:'ห้องเรียน / ระดับชั้น',terms:'เมื่อสมัครสมาชิก ถือว่าคุณยอมรับข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว',homeT:'แจ้งของหาย',homeS:'พบของหาย หรือเจอของที่มีเจ้าของ\nแจ้งได้ที่นี่เลย',lostT:'แจ้งของหาย',lostS:'แจ้งเมื่อคุณทำของหาย',foundT:'พบของแล้ว',foundS:'แจ้งเมื่อคุณเจอของผู้อื่น',recent:'รายการล่าสุด',all:'ดูทั้งหมด',home:'หน้าหลัก',items:'รายการ',profile:'โปรไฟล์',lost:'ของหาย',found:'พบของ',review:'รอตรวจสอบ',returned:'ส่งคืนแล้ว',foundB:'พบของแล้ว',rep:'แจ้งของหาย / พบของ',photo:'อัปโหลดรูปภาพ',photoS:'หรือถ่ายรูป (ไม่บังคับ)',name:'ชื่อรายการ',nameP:'เช่น กระเป๋าสะพายสีดำ',desc:'รายละเอียดเพิ่มเติม',descP:'เช่น ตราสินค้า สี ขนาด ฯลฯ',cat:'หมวดหมู่',catP:'เลือกหมวดหมู่',place:'สถานที่ที่พบ / หาย',placeP:'เช่น อาคารเรียน 1',date:'วันที่เกิดเหตุ',confirm:'ยืนยันการแจ้ง',req:'จำเป็นต้องกรอก',cEl:'อุปกรณ์อิเล็กทรอนิกส์',cBag:'กระเป๋า',cBot:'ขวดน้ำ / ของใช้',cAcc:'ร่ม / เครื่องแต่งกาย',cDoc:'บัตร / เอกสาร',cfT:'เผยแพร่รายการนี้?',cfS:'เจ้าหน้าที่จะตรวจสอบก่อนแสดงให้ผู้อื่นเห็น',cancel:'ยกเลิก',publish:'เผยแพร่',sent:'ส่งรายการแล้ว รอเจ้าหน้าที่ตรวจสอบ',all2:'ทั้งหมด',allItems:'รายการทั้งหมด',myRep:'รายการที่แจ้งไว้',search:'ค้นหาชื่อสิ่งของ...',none:'ไม่พบรายการที่ตรงกัน',noneS:'ลองเปลี่ยนคำค้นหา หรือแจ้งรายการใหม่',clear:'ดูทุกรายการ',where:'สถานที่',reporter:'ผู้แจ้ง',contact:'ติดต่อผู้แจ้ง',claim:'ติดต่อเพื่อยืนยันความเป็นเจ้าของก่อนรับคืน',online:'ออนไลน์',typeMsg:'พิมพ์ข้อความ...',hello:'สวัสดีครับ มีหูฟังไหมครับ?',reply:'ได้ครับ ติดต่อรับได้ที่ห้องปกครอง',user:'นักเรียนตัวอย่าง',userC:'ม.5/1',mates:'นักเรียนชาย ชั้น ม.5/1',noti:'การแจ้งเตือน',notiMy:'การแจ้งเตือน',about:'เกี่ยวกับแอป',school:'ติดต่อโรงเรียน',logout:'ออกจากระบบ',settings:'ตั้งค่า',lang:'ภาษา',theme:'ธีม',auto:'ตามระบบ',light:'สว่าง',dark:'มืด',privacy:'ซ่อนข้อมูลติดต่อสาธารณะ',ver:'เวอร์ชันแอป',today:'วันนี้',yest:'เมื่อวาน',n1:'มีคนตอบกลับในรายการ "หูฟัง AirPods"',n2:'รายการของคุณถูกพบแล้ว "กระเป๋านักเรียน"',n3:'อัปเดตสถานะ "ขวดน้ำ" เป็น "รอตรวจสอบ"',soon:'ฟีเจอร์นี้จะมาเร็ว ๆ นี้',ago:'เมื่อ 2 ชั่วโมงที่แล้ว',lh:'th-TH',
+i1:'หูฟัง AirPods',i2:'กระเป๋านักเรียน',i3:'ขวดน้ำ',i4:'ร่มสีดำ',i5:'บัตรนักเรียน',d1:'AirPods สีขาว มีรอยขีดข่วนเล็กน้อย',d2:'กระเป๋าสะพายสีดำ มีพวงกุญแจรูปหมี',d3:'ขวดน้ำสีฟ้า 500 มล.',d4:'ร่มพับสีดำ ด้ามสีเงิน',d5:'บัตรนักเรียนชั้น ม.4',p1:'อาคารเรียน 1',p2:'โรงอาหาร',p3:'สนามบาสเกตบอล',p4:'ห้องสมุด',p5:'ห้องพละ'},
+en:{app:'Lost&Found',tag:'Lost something? Report it at school.',loading:'Loading...',login:'Sign in',loginSub:'Sign in to continue',id:'Phone / Email',pw:'Password',pw2:'Confirm password',forgot:'Forgot password?',noacc:"Don't have an account?",reg:'Sign up',regSub:'Create an account to report items',fname:'Full name',sid:'Student ID',cls:'Class / Grade',terms:'By signing up you accept the Terms of Use and Privacy Policy.',homeT:'Lost & Found',homeS:'Lost something or found something?\nReport it here.',lostT:'Report lost item',lostS:'When you lose something',foundT:'Report found item',foundS:"When you find someone's item",recent:'Recent items',all:'See all',home:'Home',items:'Items',profile:'Profile',lost:'Lost',found:'Found',review:'In review',returned:'Returned',foundB:'Found',rep:'Report an item',photo:'Upload a photo',photoS:'or take one (optional)',name:'Item name',nameP:'e.g. Black shoulder bag',desc:'More details',descP:'e.g. brand, color, size',cat:'Category',catP:'Choose a category',place:'Where it was lost / found',placeP:'e.g. Building 1',date:'Date',confirm:'Submit report',req:'This field is required',cEl:'Electronics',cBag:'Bags',cBot:'Daily items',cAcc:'Umbrellas / Clothing',cDoc:'Cards / Documents',cfT:'Publish this report?',cfS:'Staff will review it before others can see it.',cancel:'Cancel',publish:'Publish',sent:'Report sent. Waiting for staff review.',all2:'All',allItems:'All items',myRep:'My reports',search:'Search items...',none:'No matching items',noneS:'Try another keyword or report a new item.',clear:'Show all items',where:'Location',reporter:'Reported by',contact:'Contact reporter',claim:'Contact them to confirm ownership before pickup.',online:'Online',typeMsg:'Type a message...',hello:'Hi! Did you find the earbuds?',reply:'Yes! You can pick them up at the student affairs office.',user:'Sample Student',userC:'Grade 11/1',mates:'Male student, Grade 11/1',noti:'Notifications',notiMy:'Notifications',about:'About the app',school:'Contact school',logout:'Sign out',settings:'Settings',lang:'Language',theme:'Theme',auto:'System',light:'Light',dark:'Dark',privacy:'Hide contact info from public',ver:'App version',today:'Today',yest:'Yesterday',n1:'Someone replied about "AirPods"',n2:'Your item was found: "School bag"',n3:'"Water bottle" is now "In review"',soon:'Coming soon',ago:'2 hours ago',lh:'en-GB',
+i1:'AirPods',i2:'School bag',i3:'Water bottle',i4:'Black umbrella',i5:'Student ID card',d1:'White AirPods with minor scratches',d2:'Black shoulder bag with a bear keychain',d3:'Blue 500 ml water bottle',d4:'Black foldable umbrella, silver handle',d5:'Grade 10 student card',p1:'Building 1',p2:'Canteen',p3:'Basketball court',p4:'Library',p5:'PE room'}};
+const S={scr:'splash',lang:'th',theme:'light',type:'lost',q:'',f:'all',sel:null,mine:false,errs:{},pv:null,sheet:false,notif:true,priv:true,
+items:[{id:1,k:'i1',ic:'phones',s:'lost',d:'2026-11-24T09:20',mine:1},{id:2,k:'i2',ic:'bag',s:'found',d:'2026-11-23T16:45'},{id:3,k:'i3',ic:'bottle',s:'lost',d:'2026-11-22T14:30',mine:1},{id:4,k:'i4',ic:'umb',s:'found',d:'2026-11-21T11:10'},{id:5,k:'i5',ic:'card',s:'returned',d:'2026-11-20T09:00'}],
+msgs:[],pwv:false};
+try{Object.assign(S,JSON.parse(localStorage.getItem('lf')||'{}'))}catch(e){}
+const t=k=>T[S.lang][k]??k,esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const save=()=>{try{localStorage.setItem('lf',JSON.stringify({lang:S.lang,theme:S.theme}))}catch(e){}};
+const mq=matchMedia('(prefers-color-scheme:dark)');
+function applyTheme(){document.documentElement.dataset.theme=S.theme==='auto'?(mq.matches?'dark':'light'):S.theme;document.documentElement.lang=S.lang}
+mq.addEventListener&&mq.addEventListener('change',applyTheme);
+const nm=i=>i.custom?esc(i.custom.n):t(i.k),dsc=i=>i.custom?esc(i.custom.d||''):t('d'+i.k.slice(1)),plc=i=>i.custom?esc(i.custom.p):t('p'+i.k.slice(1));
+const fd=(s,time=1)=>new Date(s).toLocaleString(t('lh'),time?{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}:{day:'numeric',month:'short',year:'numeric'});
+const bd=s=>`<span class="badge b-${s=='found'?'found':s}">${t(s=='found'?'foundB':s)}</span>`;
+const logo=(c='')=>`<div class="logo glass ${c}"><svg viewBox="0 0 100 100" fill="none" stroke="var(--tx)" stroke-linecap="round"><circle cx="43" cy="43" r="27" stroke-width="9" opacity=".8"/><path d="M63 63l22 22" stroke-width="12" opacity=".85"/><text x="43" y="55" text-anchor="middle" font-size="34" font-weight="700" fill="var(--tx)" stroke="none">?</text></svg></div>`;
+const fld=(id,l,ty,ph,i,x='')=>`<div class="fld ${S.errs[id]?'err':''}"><label for="${id}">${l}</label><div class="w">${ic(i)}<input id="${id}" type="${ty}" placeholder="${ph}" autocomplete="off" ${x}>${ty==='password'?`<button type="button" data-act="eye" class="ib" aria-label="show">${ic('eye')}</button>`:''}</div><div class="em">${t('req')}</div></div>`;
+const topbar=(title,back,right='')=>`<div class="top" style="position:relative">${back?`<button class="ib glass" data-go="${back}" aria-label="back">${ic('back')}</button>`:'<span class="ib"></span>'}<h3>${title}</h3>${right||'<span class="ib"></span>'}</div>`;
+const th=i=>i.custom?.img?`<img src="${i.custom.img}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`:ic(i.ic);
+const itemCard=i=>`<button class="item glass" data-open="${i.id}"><div class="thumb">${th(i)}</div><div class="g"><div class="nm">${nm(i)}</div><div class="cap">${plc(i)} · ${fd(i.d,0)}</div></div>${bd(i.s)}</button>`;
+const V={
+splash:()=>`<div class="body c" style="display:flex;flex-direction:column;justify-content:center;align-items:center">${logo()}<h1 style="font-size:34px">${t('app')}</h1><p class="mu">${t('tag')}</p><div style="margin-top:70px" class="cap"><div class="spin"></div>${t('loading')}</div></div>`,
+login:()=>`<div class="body" style="padding-top:60px"><div class="hero">${logo('s')}<h1>${t('app')}</h1><p class="mu">${t('loginSub')}</p></div>${fld('id',t('id'),'text',t('id'),'user')}${fld('pw',t('pw'),'password',t('pw'),'lock')}<p style="text-align:right;margin:-4px 0 18px"><a class="l cap" data-act="soon">${t('forgot')}</a></p><button class="btn" data-go="home">${t('login')}</button><p class="c mu" style="margin-top:22px">${t('noacc')} <a class="l" data-go="register">${t('reg')}</a></p></div>`,
+register:()=>`<div class="body">${topbar('',  'login')}<div class="hero" style="padding-top:0"><h1>${t('reg')}</h1><p class="mu">${t('regSub')}</p></div>${fld('r1',t('fname'),'text',t('fname'),'user')}${fld('r2',t('id'),'text',t('id'),'chat')}${fld('r3',t('sid'),'text',t('sid'),'tag')}${fld('r4',t('pw'),'password',t('pw'),'lock')}<button class="btn" data-go="home" style="margin-top:8px">${t('reg')}</button><p class="cap c" style="margin-top:16px">${t('terms')}</p></div>`,
+home:()=>{const r=S.items.slice(0,3).map(itemCard).join('');return`<div class="body nav"><div class="top"><div class="row"><b style="font-size:19px">${t('app')}</b></div><button class="ib glass" data-go="settings" aria-label="${t('settings')}">${ic('gear')}</button></div><div class="hero">${logo()}<h1>${t('homeT')}</h1><p class="mu" style="margin-top:6px;white-space:pre-line">${t('homeS')}</p></div>
+<button class="sc glass" data-new="lost"><span class="ic">${ic('mega')}</span><span class="g"><b>${t('lostT')}</b><br><span class="cap">${t('lostS')}</span></span>${ic('chev')}</button>
+<button class="sc glass" data-new="found"><span class="ic">${ic('box')}</span><span class="g"><b>${t('foundT')}</b><br><span class="cap">${t('foundS')}</span></span>${ic('chev')}</button>
+<div class="sec-h"><h2>${t('recent')}</h2><button class="cap" data-go="items" style="min-height:44px">${t('all')} ›</button></div>${r}</div>`},
+report:()=>{const cs=['cEl','cBag','cBot','cAcc','cDoc'];return`<div class="body">${topbar(t('rep'),'home')}<div class="seg" style="margin-bottom:16px"><button data-type="lost" class="${S.type=='lost'?'on':''}">${ic('search')}${t('lost')}</button><button data-type="found" class="${S.type=='found'?'on':''}">${ic('check')}${t('found')}</button></div>
+<label class="upl glass">${S.pv?`<img src="${S.pv}" alt="">`:`${ic('camera')}<b>${t('photo')}</b><span class="cap">${t('photoS')}</span>`}<input type="file" id="ph" accept="image/*" hidden></label>
+${fld('n',t('name')+' *','text',t('nameP'),'tag')}
+<div class="fld"><label for="d">${t('desc')}</label><div class="w"><textarea id="d" placeholder="${t('descP')}"></textarea></div></div>
+<div class="fld ${S.errs.c?'err':''}"><label for="c">${t('cat')} *</label><div class="w">${ic('box')}<select id="c"><option value="">${t('catP')}</option>${cs.map(c=>`<option value="${c}">${t(c)}</option>`).join('')}</select></div><div class="em">${t('req')}</div></div>
+${fld('p',t('place')+' *','text',t('placeP'),'pin')}${fld('dt',t('date')+' *','date','','cal')}
+<button class="btn" data-act="submit">${t('confirm')}</button></div>${S.sheet?`<div class="sheet" data-act="close"><div><h2>${t('cfT')}</h2><p class="mu" style="margin:6px 0 20px">${t('cfS')}</p><button class="btn" data-act="publish">${t('publish')}</button><button class="btn sec" style="margin-top:10px" data-act="close">${t('cancel')}</button></div></div>`:''}`},
+items:()=>{return`<div class="body nav"><h1 class="c" style="font-size:22px;margin-bottom:14px">${S.mine?t('myRep'):t('allItems')}</h1><div class="fld" style="margin-bottom:0"><div class="w">${ic('search')}<input id="q" value="${esc(S.q)}" placeholder="${t('search')}" aria-label="${t('search')}"></div></div>
+<div class="chips">${[['all','all2'],['lost','lost'],['found','foundB']].map(([k,l])=>`<button class="chip ${S.f==k?'on':''}" data-f="${k}">${t(l)}</button>`).join('')}</div><div id="ls">${listHtml()}</div></div>`},
+detail:()=>{const i=S.items.find(x=>x.id==S.sel);return`<div class="body">${topbar('','items')}<div class="thumb lg">${th(i)}</div><div class="row" style="margin:18px 0 14px"><h1 class="g" style="font-size:24px">${nm(i)}</h1>${bd(i.s)}</div>
+<div class="info">${ic('cal')}<span>${fd(i.d)}</span></div><div class="info">${ic('pin')}<span>${plc(i)}</span></div><div class="info">${ic('info')}<span>${dsc(i)}</span></div><div class="info">${ic('user')}<span><span class="cap">${t('reporter')}</span><br>${t('mates')}</span></div>
+${i.s=='found'?`<p class="cap glass" style="padding:12px 16px;margin:14px 0">${t('claim')}</p>`:''}<button class="btn" data-go="chat" style="margin-top:20px">${ic('chat')}${t('contact')}</button></div>`},
+chat:()=>`<div class="body" style="padding-bottom:0;flex:none">${topbar(t('mates'),'detail')}</div><div class="msgs" id="ms"><p class="cap c">● ${t('online')}</p>${S.msgs.map(m=>`<div class="m ${m.me?'me':'th'}">${esc(m.x)}<small>${m.t}</small></div>`).join('')}</div><div class="cb"><input id="cm" placeholder="${t('typeMsg')}" aria-label="${t('typeMsg')}"><button class="snd" data-act="send" aria-label="send">${ic('send')}</button></div>`,
+profile:()=>`<div class="body nav"><div class="top"><span class="ib"></span><h3 style="position:static">${t('profile')}</h3><button class="ib glass" data-go="settings" aria-label="${t('settings')}">${ic('gear')}</button></div><div class="av">${ic('user')}</div><h2 class="c">${t('user')}</h2><p class="mu c" style="margin-bottom:22px">${t('userC')}</p>
+<div class="list glass"><button data-act="mine">${ic('list')}<span>${t('myRep')}</span><span class="mu" style="margin-left:auto">${ic('chev')}</span></button><button data-go="notif">${ic('bell')}<span>${t('noti')}</span><span class="cnt">1</span></button></div>
+<div class="list glass"><button data-go="settings">${ic('gear')}<span>${t('settings')}</span><span class="mu" style="margin-left:auto">${ic('chev')}</span></button><button data-act="soon">${ic('info')}<span>${t('about')}</span><span class="mu" style="margin-left:auto">${ic('chev')}</span></button><button data-act="soon">${ic('chat')}<span>${t('school')}</span><span class="mu" style="margin-left:auto">${ic('chev')}</span></button></div>
+<button class="btn out glass" data-go="login">${ic('out')}${t('logout')}</button></div>`,
+notif:()=>{const n=(i,c,x,tm)=>`<div class="nt glass"><div class="d" style="background:var(--${c}-b);color:var(--${c}-t)">${ic(i)}</div><div class="g"><b>${x}</b><div class="cap">${tm}</div></div></div>`;return`<div class="body">${topbar(t('noti'),'profile')}<p class="cap" style="margin:0 4px 8px">${t('today')}</p>${n('chat','lost',t('n1'),'20:15')}${n('check','found',t('n2'),'18:30')}<p class="cap" style="margin:16px 4px 8px">${t('yest')}</p>${n('info','rev',t('n3'),'14:20')}</div>`},
+settings:()=>{const sg=(k,o,cur)=>`<div class="seg">${o.map(([v,l])=>`<button data-set="${k}:${v}" class="${cur==v?'on':''}" aria-pressed="${cur==v}">${l}</button>`).join('')}</div>`;
+return`<div class="body">${topbar(t('settings'),'back')}
+<div class="glass" style="padding:18px;margin-bottom:16px"><div class="row" style="margin-bottom:12px">${ic('globe')}<b>${t('lang')}</b></div>${sg('lang',[['th','ไทย'],['en','English']],S.lang)}</div>
+<div class="glass" style="padding:18px;margin-bottom:16px"><div class="row" style="margin-bottom:12px">${ic('moon')}<b>${t('theme')}</b></div>${sg('theme',[['auto',t('auto')],['light',t('light')],['dark',t('dark')]],S.theme)}</div>
+<div class="list glass"><button data-tg="notif">${ic('bell')}<span>${t('noti')}</span><i class="sw ${S.notif?'on':''}"></i></button><button data-tg="priv">${ic('lock')}<span>${t('privacy')}</span><i class="sw ${S.priv?'on':''}"></i></button><div class="li">${ic('info')}<span>${t('ver')}</span><span class="mu" style="margin-left:auto">1.0.0</span></div></div>
+<button class="btn out glass" data-go="login">${ic('out')}${t('logout')}</button></div>`}};
+function listHtml(){const q=S.q.trim().toLowerCase(),l=S.items.filter(i=>(S.f=='all'||(i.ty||i.s)==S.f)&&(!S.mine||i.mine)&&(!q||(i.custom?i.custom.n:t(i.k)).toLowerCase().includes(q)));
+return l.length?l.map(itemCard).join(''):`<div class="empty">${ic('search')}<h3 style="color:var(--tx)">${t('none')}</h3><p>${t('noneS')}</p><button class="btn sec" style="margin-top:18px" data-act="clr">${t('clear')}</button></div>`}
+const TABS=['home','items','profile'];let prev='home';
+function syncNav(mode){const a=document.getElementById('app'),i=TABS.indexOf(S.scr);let n=a.querySelector('.bar');
+if(!n){a.insertAdjacentHTML('beforeend',`<nav class="bar glass hide" style="--i:${Math.max(i,0)}"><i class="pill"></i>${TABS.map((k,j)=>`<button data-go="${k}">${ic(['home','list','user'][j])}<span></span></button>`).join('')}</nav>`);n=a.querySelector('.bar');n.offsetWidth}
+if(i>=0)n.style.setProperty('--i',i);n.classList.toggle('hide',i<0);
+n.querySelectorAll('button').forEach((b,j)=>{b.classList.toggle('on',j==i);b.setAttribute('aria-label',t(TABS[j]));const sp=b.querySelector('span');sp.textContent=t(TABS[j]);if(mode=='lang'){sp.classList.remove('lang-out');sp.classList.add('lang-in');setTimeout(()=>sp.classList.remove('lang-in'),450)}})}
+function draw(keep,mode){const a=document.getElementById('app'),olds=[...a.querySelectorAll('.scr')],cur=olds.filter(x=>!x.dataset.out).pop();
+const sc=cur?.querySelector('.body')?.scrollTop||0,el=document.createElement('div');el.className='scr';el.innerHTML=V[S.scr]();
+if(keep&&!mode)el.style.animation='none';
+if(mode=='r'||mode=='l'){el.classList.add('in-'+mode);olds.filter(x=>x!==cur).forEach(x=>x.remove());if(cur){cur.dataset.out=1;cur.classList.add('out-'+(mode=='r'?'l':'r'));cur.style.pointerEvents='none';setTimeout(()=>cur.remove(),340)}}
+else{olds.forEach(x=>x.remove());if(mode=='lang'){el.classList.add('lang-in');setTimeout(()=>el.classList.remove('lang-in'),450)}}
+a.insertBefore(el,a.querySelector('.bar'));
+const b=el.querySelector('.body');if(b&&keep)b.scrollTop=sc;
+const ms=el.querySelector('#ms');if(ms)ms.scrollTop=ms.scrollHeight;
+syncNav(mode);
+if(S.scr=='splash')setTimeout(()=>{if(S.scr=='splash')go('login')},1400)}
+function setLang(v){if(v==S.lang)return;const a=document.getElementById('app'),sc=[...a.querySelectorAll('.scr')].pop();sc&&sc.classList.add('lang-out');a.querySelectorAll('.bar span').forEach(x=>x.classList.add('lang-out'));
+setTimeout(()=>{S.lang=v;save();applyTheme();draw(1,'lang')},190)}
+function setTheme(v){if(v==S.theme)return;S.theme=v;save();applyTheme()}
+function go(s){if(s=='back')s=prev;if(s=='settings')prev=S.scr=='settings'?prev:S.scr;if(s=='chat'&&!S.msgs.length)S.msgs=[{me:1,x:t('hello'),t:'09:42'},{me:0,x:t('reply'),t:'09:43'}];
+const a=TABS.indexOf(S.scr),b=TABS.indexOf(s),dir=a>=0&&b>=0&&a!=b?(b>a?'r':'l'):null;S.errs={};S.sheet=false;S.scr=s;draw(a>=0&&a==b?1:0,dir)}
+function toast(x){const e=document.createElement('div');e.className='toast glass';e.textContent=x;document.getElementById('app').appendChild(e);setTimeout(()=>e.remove(),2400)}
+function val(){const g=id=>document.getElementById(id)?.value.trim();S.draft={n:g('n'),d:g('d'),c:g('c'),p:g('p'),dt:g('dt')};S.errs={n:!S.draft.n,c:!S.draft.c,p:!S.draft.p,dt:!S.draft.dt};return!Object.values(S.errs).some(Boolean)}
+document.addEventListener('click',e=>{const el=e.target.closest('[data-go],[data-open],[data-new],[data-type],[data-f],[data-act],[data-set],[data-tg]');if(!el)return;const d=el.dataset;
+if(d.go){if(d.go=='profile'||d.go=='home'||(d.go=='items'&&el.closest('.bar')))S.mine=false;go(d.go)}
+else if(d.open){S.sel=+d.open;go('detail')}
+else if(d.new){S.type=d.new;S.pv=null;go('report')}
+else if(d.type){val();S.type=d.type;const dr=S.draft;S.errs={};draw(1);['n','d','p','dt'].forEach(k=>{const x=document.getElementById(k);if(x)x.value=dr[k]||''});const c=document.getElementById('c');if(c)c.value=dr.c||''}
+else if(d.f){S.f=d.f;draw(1)}
+else if(d.set){const[k,v]=d.set.split(':');el.parentElement.querySelectorAll('button').forEach(b=>{const on=b===el;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});k=='theme'?setTheme(v):setLang(v)}
+else if(d.tg){S[d.tg]=!S[d.tg];draw(1)}
+else{const a=d.act;if(a=='close'&&el.classList.contains('sheet')&&e.target!==el)return;
+if(a=='soon')toast(t('soon'));
+else if(a=='eye'){const i=el.parentElement.querySelector('input');i.type=i.type=='password'?'text':'password'}
+else if(a=='clr'){S.q='';S.f='all';S.mine=false;draw()}
+else if(a=='mine'){S.mine=true;S.f='all';S.q='';prev='mine';go('items')}
+else if(a=='submit'){if(val()){S.sheet=true}draw(1);const dr=S.draft;['n','d','p','dt'].forEach(k=>{const x=document.getElementById(k);if(x)x.value=dr[k]||''});const c=document.getElementById('c');if(c)c.value=dr.c||''}
+else if(a=='close'){S.sheet=false;const dr=S.draft;draw(1);['n','d','p','dt'].forEach(k=>{const x=document.getElementById(k);if(x)x.value=dr[k]||''});const c=document.getElementById('c');if(c)c.value=dr.c||''}
+else if(a=='publish'){const dr=S.draft;S.items.unshift({id:Date.now(),k:'i1',ic:{cEl:'phones',cBag:'bag',cBot:'bottle',cAcc:'umb',cDoc:'card'}[dr.c]||'box',ty:S.type,s:'review',d:dr.dt+'T'+new Date().toTimeString().slice(0,5),mine:1,custom:{n:dr.n,d:dr.d,p:dr.p,img:S.pv}});S.pv=null;S.draft=null;S.sheet=false;S.f='all';S.mine=false;go('items');toast(t('sent'))}
+else if(a=='send'){const i=document.getElementById('cm');if(!i.value.trim())return;S.msgs.push({me:1,x:i.value.trim(),t:new Date().toTimeString().slice(0,5)});draw(1);document.getElementById('cm').focus();setTimeout(()=>{S.msgs.push({me:0,x:'👍',t:new Date().toTimeString().slice(0,5)});if(S.scr=='chat')draw(1)},900)}}});
+document.addEventListener('input',e=>{if(e.target.id=='q'){S.q=e.target.value;document.getElementById('ls').innerHTML=listHtml()}});
+document.addEventListener('change',e=>{if(e.target.id=='ph'&&e.target.files[0]){val();const dr=S.draft;S.pv=URL.createObjectURL(e.target.files[0]);draw(1);['n','d','p','dt'].forEach(k=>{const x=document.getElementById(k);if(x)x.value=dr[k]||''});const c=document.getElementById('c');if(c)c.value=dr.c||''}});
+document.addEventListener('keydown',e=>{if(e.key=='Enter'&&e.target.id=='cm')document.querySelector('[data-act=send]').click()});
+applyTheme();draw();
+</script>
+</body>
+</html>
